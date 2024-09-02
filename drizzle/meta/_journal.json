@@ -15,6 +15,13 @@
       "when": 1725282996009,
       "tag": "0001_melted_lilandra",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1725284947797,
+      "tag": "0002_omniscient_wallow",
+      "breakpoints": true
     }
   ]
 }

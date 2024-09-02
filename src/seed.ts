@@ -26,6 +26,7 @@ async function addMeal(
 }
 
 async function addMealItem(
+  userId: string,
   mealId: string,
   foodName: string,
   quantity: string,
@@ -44,6 +45,7 @@ async function addMealItem(
     protein,
     carbs,
     fat,
+    userId,
   }).returning();
   return newMealItem;
 }
@@ -75,6 +77,7 @@ async function generateDummyData(
 
       for (let k = 0; k < itemsPerMeal; k++) {
         const mealItem = await addMealItem(
+          user.id,
           meal.id,
           faker.food.dish(),
           faker.number.float({ min: 50, max: 500 }).toString(),

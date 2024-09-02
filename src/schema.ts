@@ -26,4 +26,8 @@ export const mealItems = pgTable("meal_items", {
   protein: text("protein"),
   carbs: text("carbs"),
   fat: text("fat"),
+  /**
+   * for RLS
+   */
+  userId: uuid("user_id").references(() => users.id).notNull(),
 });

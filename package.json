@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "apply:rls": "ts-node src/rls.ts",
     "format": "biome format --write .",
     "lint": "biome lint .",
     "check": "biome check --apply ."
