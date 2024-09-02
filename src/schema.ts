@@ -1,11 +1,28 @@
-import { pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-typebox";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
-export const books = pgTable("books", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  author: varchar("password", { length: 255 }).notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
+export const users = pgTable("users", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  username: text("username").notNull(),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const insertBookSchema = createInsertSchema(books);
+export const meals = pgTable("meals", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  mealType: text("meal_type").notNull(),
+  mealDatetime: timestamp("meal_datetime").notNull(),
+  notes: text("notes"),
+});
+
+export const mealItems = pgTable("meal_items", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  mealId: uuid("meal_id").references(() => meals.id).notNull(),
+  foodName: text("food_name").notNull(),
+  quantity: text("quantity").notNull(),
+  unit: text("unit").notNull(),
+  calories: text("calories"),
+  protein: text("protein"),
+  carbs: text("carbs"),
+  fat: text("fat"),
+});
