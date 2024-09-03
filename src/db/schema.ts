@@ -1,5 +1,4 @@
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm/sql";
+import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -22,10 +21,10 @@ export const mealItems = pgTable("meal_items", {
   foodName: text("food_name").notNull(),
   quantity: text("quantity").notNull(),
   unit: text("unit").notNull(),
-  calories: text("calories"),
-  protein: text("protein"),
-  carbs: text("carbs"),
-  fat: text("fat"),
+  calories: integer("calories"),
+  protein: integer("protein"),
+  carbs: integer("carbs"),
+  fat: integer("fat"),
   /**
    * for RLS
    */

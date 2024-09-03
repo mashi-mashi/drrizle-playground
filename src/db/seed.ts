@@ -31,10 +31,10 @@ async function addMealItem(
   foodName: string,
   quantity: string,
   unit: string,
-  calories?: string,
-  protein?: string,
-  carbs?: string,
-  fat?: string,
+  calories?: number,
+  protein?: number,
+  carbs?: number,
+  fat?: number,
 ) {
   const [newMealItem] = await db.insert(mealItems).values({
     mealId,
@@ -82,10 +82,10 @@ async function generateDummyData(
           faker.food.dish(),
           faker.number.float({ min: 50, max: 500 }).toString(),
           faker.helpers.arrayElement(["g", "ml", "個", "皿", "カップ"]),
-          faker.number.int({ min: 50, max: 800 }).toString(),
-          faker.number.float({ min: 0, max: 50 }).toString(),
-          faker.number.float({ min: 0, max: 100 }).toString(),
-          faker.number.float({ min: 0, max: 50 }).toString(),
+          faker.number.int({ min: 50, max: 800 }),
+          faker.number.float({ min: 0, max: 50 }),
+          faker.number.float({ min: 0, max: 100 }),
+          faker.number.float({ min: 0, max: 50 }),
         );
         console.log(`Added meal item: ${mealItem.foodName}`);
       }
