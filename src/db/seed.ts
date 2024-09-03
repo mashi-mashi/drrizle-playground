@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { db } from "./db";
+import { db } from "./database";
 import { mealItems, meals, users } from "./schema";
 
 async function createUser(username: string, email: string) {
@@ -83,9 +83,9 @@ async function generateDummyData(
           faker.number.float({ min: 50, max: 500 }).toString(),
           faker.helpers.arrayElement(["g", "ml", "個", "皿", "カップ"]),
           faker.number.int({ min: 50, max: 800 }),
-          faker.number.float({ min: 0, max: 50 }),
-          faker.number.float({ min: 0, max: 100 }),
-          faker.number.float({ min: 0, max: 50 }),
+          faker.number.int({ min: 0, max: 50 }),
+          faker.number.int({ min: 0, max: 100 }),
+          faker.number.int({ min: 0, max: 50 }),
         );
         console.log(`Added meal item: ${mealItem.foodName}`);
       }
