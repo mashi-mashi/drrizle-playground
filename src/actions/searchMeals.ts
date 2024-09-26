@@ -1,11 +1,13 @@
+"use server";
+
 import type { drizzle } from "drizzle-orm/pglite";
-import { db } from "./db/database";
+import { db } from "../db/database";
 
 import { and, eq, gt, gte, lte, type SQL, sql } from "drizzle-orm";
-import { mealItems, meals } from "./db/schema";
+import { mealItems, meals } from "../db/schema";
 
 // Types
-export interface MealSearchCriteria {
+export interface SearchMealCriteria {
   userId?: string;
   mealType?: string;
   fromDate?: Date;
@@ -16,7 +18,7 @@ export interface MealSearchCriteria {
 
 // Main search function
 export async function searchMeals(
-  criteria: MealSearchCriteria,
+  criteria: SearchMealCriteria,
 ) {
   const query = db
     .select({
@@ -31,21 +33,12 @@ export async function searchMeals(
     .leftJoin(mealItems, eq(meals.id, mealItems.mealId))
     .groupBy(meals.id);
 
-  // Build WHERE conditions
-  const whereConditions: SQL[] = [];
-
-  if (criteria.userId) {
-    whereConditions.push(eq(meals.userId, criteria.userId));
-  }
-  if (criteria.mealType) {
-    whereConditions.push(eq(meals.mealType, criteria.mealType));
-  }
-  if (criteria.fromDate) {
-    whereConditions.push(gte(meals.mealDatetime, criteria.fromDate));
-  }
-  if (criteria.toDate) {
-    whereConditions.push(lte(meals.mealDatetime, criteria.toDate));
-  }
+  const whereConditions = [
+    criteria.userId && eq(meals.userId, criteria.userId),
+    criteria.mealType && eq(meals.mealType, criteria.mealType),
+    criteria.fromDate && gte(meals.mealDatetime, criteria.fromDate),
+    criteria.toDate && lte(meals.mealDatetime, criteria.toDate),
+  ].filter((v) => !!v);
 
   if (whereConditions.length > 0) {
     query.where(and(...whereConditions));
@@ -70,15 +63,3 @@ export async function searchMeals(
 
   return await query;
 }
-
-const main = async () => {
-  console.info(
-    await searchMeals({
-      maxCalories: 800,
-      mealType: "間食",
-      userId: "5ba09ce4-0a2a-4b78-96dd-43325491c639",
-    }),
-  );
-};
-
-main();
