@@ -5,7 +5,7 @@ export default {
   schema: "./src/db/schema.ts",
   out: "./drizzle",
   dbCredentials: {
-    url: "./data",
+    url: "src/db/data",
   },
   driver: "pglite",
 } satisfies Config;

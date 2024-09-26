@@ -5,8 +5,7 @@ import type { SearchMealCriteria } from 'actions/searchMeals';
 import { useState } from 'react';
 
 export default function Home() {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const [meals, setMeals] = useState<any[]>([]);
+  const [meals, setMeals] = useState< Awaited<ReturnType<typeof searchMealsAction>>>([]);
 
   const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -16,7 +15,6 @@ export default function Home() {
       maxCalories: Number(formData.get('maxCalories')),
     };
     const result = await searchMealsAction(criteria);
-    console.log(result);
     setMeals(result);
   };
 
@@ -29,7 +27,7 @@ export default function Home() {
       </form>
       <ul>
         {meals.map((meal) => (
-          <li key={meal.id}>{meal.name} - {meal.calories}カロリー</li>
+          <li key={meal.id}>{meal.mealType} - {meal.totalCalories}カロリー</li>
         ))}
       </ul>
     </div>
