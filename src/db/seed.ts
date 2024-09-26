@@ -55,7 +55,6 @@ async function generateDummyData(
   mealsPerUser: number,
   itemsPerMeal: number,
 ) {
-  console.log(db);
   await db.delete(mealItems);
   await db.delete(meals);
   await db.delete(users);

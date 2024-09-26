@@ -7,6 +7,4 @@ module.exports = {
   experimental: {
     serverComponentsExternalPackages : ['@electric-sql/pglite'],
   },
-  distDir: 'dist',
-  dir: 'src'
 }

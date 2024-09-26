@@ -5,7 +5,7 @@ import type { SearchMealCriteria } from 'actions/searchMeals';
 import { useState } from 'react';
 
 export default function Home() {
-  const [meals, setMeals] = useState< Awaited<ReturnType<typeof searchMealsAction>>>([]);
+  const [meals, setMeals] = useState<Awaited<ReturnType<typeof searchMealsAction>>>([]);
 
   const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
