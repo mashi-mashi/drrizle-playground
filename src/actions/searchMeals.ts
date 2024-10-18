@@ -63,3 +63,29 @@ export async function searchMeals(
 
   return await query;
 }
+
+
+
+
+
+
+
+
+
+
+export async function testQuery() {
+  const query = db
+  .select({
+    id: meals.id,
+    userId: meals.userId,
+    mealType: meals.mealType,
+    mealDatetime: meals.mealDatetime,
+    totalCalories: sql<number>`COALESCE(SUM(${mealItems.calories}), 0)`,
+    itemCount: sql<number>`COUNT(${mealItems.id})`.as("itemCount"),
+  })
+  .from(meals)
+  .leftJoin(mealItems, eq(meals.id, mealItems.mealId))
+  .groupBy(meals.id);
+
+  return await query;
+}
